@@ -18,9 +18,9 @@ use App\Http\Controllers\Admin;
 Route::group(['prefix' => 'admin', 'as' => 'admin.'] ,function (){
 
     //Dashboard
-    Route::get('/', [Admin\MainController::class, 'index']);
+    Route::get('/', [Admin\MainController::class, 'index'])->name('dashboard');
 
     //Категория
-    Route::resource('/category', Admin\CategoryController::class)->except('show');
+    Route::resource('/category', Admin\CategoryController::class)->except('show', 'edit', 'update');
 
 });
