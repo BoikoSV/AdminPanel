@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.'] ,function (){
+
+    //Dashboard
+    Route::get('/', [Admin\MainController::class, 'index']);
+
+    //Категория
+    Route::resource('/category', Admin\CategoryController::class)->except('show');
+
 });
