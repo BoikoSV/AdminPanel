@@ -14,4 +14,4 @@ const mix = require('laravel-mix');
 mix.styles([
     'resources/assets/admin/styles/adminlte.min.css',
     'resources/assets/admin/styles/all.min.css',
-], 'public/admin/css/style.css');
+], 'public/assets/admin/css/style.css');
