@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,31 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory, Sluggable;
+
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Переключатель статуса (опубликован/не опубликован)
+     * @param $id
+     * @return $this
+     */
+    public function toggleStatus(){
+        if ($this->is_publish){
+            $this->is_publish = 0;
+        }else{
+            $this->is_publish = 1;
+        }
+        $this->save();
+        return $this;
+    }
+
 
     public function sluggable(): array
     {
