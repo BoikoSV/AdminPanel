@@ -23,4 +23,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'] ,function (){
     //Категория
     Route::resource('/category', Admin\CategoryController::class)->except('show', 'edit', 'update');
 
+    //Посты
+
+    Route::get('/post/{post}/status', [Admin\PostController::class, 'status'])->name('post.status');
+
+    Route::resource('/post', Admin\PostController::class);
+
 });
