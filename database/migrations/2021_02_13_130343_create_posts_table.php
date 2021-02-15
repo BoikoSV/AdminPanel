@@ -26,6 +26,9 @@ class CreatePostsTable extends Migration
             $table->string('image')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
 

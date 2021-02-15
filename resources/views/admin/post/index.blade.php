@@ -62,7 +62,7 @@
                                     @foreach($posts as $key => $post)
                                 <tr>
                                     <td><a href="{{ route('admin.post.show', ['post' => $post->id]) }}">{{ $post->title }}</a></td>
-                                    <td>{{ $post->user->name }}</td>
+                                    <td>{{ $post->user !== null ? $post->user->name : 'Не указан' }}</td>
                                     <td>{{ $post->category_id ? $post->category->name : 'Без категории' }}</td>
                                     <td>
                                         @if($post->is_publish)

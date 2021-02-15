@@ -25,55 +25,51 @@
                 <div class="col">
                     <div class="card card-primary">
                         <div class="card-body">
+                            <form action="{{ route('admin.post.store') }}" method="post" enctype="multipart/form-data">
+                                @csrf
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="inputName">Заголовок поста</label>
-                                    <input type="text" id="inputName" class="form-control">
+                                    <input type="text" name="title" id="inputName" class="form-control">
                                 </div>
                             </div>
+                            @isset($categories)
                             <div class="row">
                                 <div class="form-group col-3">
-                                    <label for="inputStatus">Status</label>
-                                    <select class="form-control custom-select">
+                                    <label for="inputStatus">Выберете категорию</label>
+                                    <select name="category_id" class="form-control custom-select">
                                         <option selected="" disabled="">Без категории</option>
-                                        <option>Мобильные телефоны</option>
-                                        <option>Аксессуары</option>
-                                        <option>Телевизоры</option>
+                                        @foreach($categories as $key => $category)
+                                        <option value="{{ $key }}">{{ $category }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
+                            @endisset
                             <div class="row">
-                                <img src="{{ asset('assets/admin/img/photo3.jpg') }}" width="300" alt="..." class="img-thumbnail">
-                            </div>
-                            <div class="row">
-                                <a href="">Удалить</a>
-                            </div>
-                            <div class="row">
-                                <form action="">
-                                    <input type="file">
-                                    <button type="submit">Загрузить</button>
-                                </form>
+                                <input name="image" type="file">
                             </div>
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="inputDescription">Короткое описание</label>
-                                    <textarea id="textarea_description" class="form-control" rows="4"></textarea>
+                                    <textarea name="description" id="textarea_description" class="form-control" rows="4"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputDescription">Текст поста</label>
-                                <textarea id="textarea_content" class="form-control" rows="4"></textarea>
+                                <textarea name="content" id="textarea_content" class="form-control" rows="4"></textarea>
 
                             </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-success float-right">Добавить пост</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-success float-right">Добавить пост</button>
                 </div>
             </div>
         </section>

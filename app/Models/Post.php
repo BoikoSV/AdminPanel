@@ -6,11 +6,20 @@ use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
     use HasFactory, Sluggable;
 
+    protected $fillable = [
+        'title',
+        'slug',
+        'content',
+        'user_id',
+        'category_id',
+        'description'
+    ];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -33,6 +42,28 @@ class Post extends Model
         }
         $this->save();
         return $this;
+    }
+
+    /**
+     * Загрузка изображения
+     * @param $image
+     * @return mixed
+     */
+    public function uploadImage($image){
+        if ($image->has('image')){
+            $this->deleteImage();
+            $path = $image->store('images/' . date('Y-m-d'), 'public');
+            $this->image = $path;
+            $this->save();
+        }
+    }
+
+    public function deleteImage(){
+        if ($this->image){
+            Storage::disk('public')->delete($this->image);
+            $this->image = null;
+        }
+        $this->save();
     }
 
 
