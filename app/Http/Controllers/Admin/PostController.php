@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create');
+        $categories = Category::pluck('name', 'id');
+
+        return view('admin.post.create', compact('categories'));
     }
 
     /**
@@ -37,7 +40,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = Post::create($request->all());
+        //todo написать немного другую логику добавления изображения, написать проверки для всех полей формы, добавить вспрывашки об успешном добавнии поста, не добавлять user_id в массовом присвоении.
+        if ($request->hasFile('image')){
+            $path = $request->file('image')->store('images/' . date('Y-m-d'), 'public');
+            $post->image = $path;
+            $post->save();
+        }
+
+        return redirect()->back();
+
     }
 
     /**
@@ -48,7 +60,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::with('user', 'category')->findOrFail($id);
+
+        return view('admin.post.show', compact('post'));
     }
 
     /**
@@ -59,7 +73,10 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        $post = Post::findOrFail($id);
+        $categories = Category::pluck('name', 'id');
 
+        return view('admin.post.edit', compact('post', 'categories'));
     }
 
     /**
@@ -71,7 +88,17 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
+        if ($request->hasFile('image')){
+            if ($post->image){
+                $post->deleteImage();
+            }
+            $path = $request->file('image')->store('images/' . date('Y-m-d'), 'public');
+            $post->image = $path;
+            $post->save();
+        }
+        return redirect()->back();
     }
 
     /**
@@ -82,7 +109,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->deleteImage();
+        return redirect()->back();
     }
 
     /**
