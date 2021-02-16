@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class UserController extends Controller
 {
@@ -38,42 +40,21 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        Auth::
-        dd(__METHOD__);
-    }
+        $request->validate([
+            'name' => 'required|min:5|max:100',
+            'email' => 'email|required|unique:users',
+            'password' => 'required|min:8|max:20',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            //todo добавить загрузку изображения
+        ]);
+        Auth::login($user);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return redirect()->route('admin.user.list');
     }
 
     /**
