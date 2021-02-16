@@ -10,10 +10,6 @@
                         <h1>Projects</h1>
                     </div>
                     <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Projects</li>
-                        </ol>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -79,11 +75,6 @@
                                 {{ $user->is_verified ? 'Проверен' : 'Не проверен' }}
                             </td>
                             <td class="project-actions text-right"  style="text-align: center; display: flex">
-                                <a class="btn btn-primary btn-sm mr-1" href=" {{ route('admin.user.show', ['user' => $user->id]) }}">
-                                    <i class="fas fa-folder">
-                                    </i>
-                                   Смотреть
-                                </a>
                                 <form action="{{ route('admin.user.destroy', ['user' => $user->id]) }}" method="post">
                                         @csrf
                                         @method('delete')
