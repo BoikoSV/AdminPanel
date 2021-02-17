@@ -28,6 +28,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'min:5|max:40',
+        ]);
         Category::create($request->all());
         return redirect()->back();
     }
