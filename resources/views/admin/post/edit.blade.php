@@ -36,6 +36,9 @@
                                             <label for="inputStatus">Выберете категорию</label>
                                             <select name="category_id" class="form-control custom-select">
 
+
+
+
                                                 @foreach($categories as $key => $category)
                                                     <option
                                                         @if($key === $post->category_id)
