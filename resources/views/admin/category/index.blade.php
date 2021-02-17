@@ -25,6 +25,9 @@
                   </span>
                 </div>
             </form>
+        @error('name')
+            <p class="text-danger">{{ $message }}</p>
+        @enderror
 
 
 
@@ -42,11 +45,11 @@
                             <th style="width: 10px">#</th>
                             <th>Название</th>
                             <th>Slug</th>
-                            <th style="width: 40px"><i class="fa fa-times" aria-hidden="true"></i></th>
+                            <th style="width: 40px"></th>
                         </tr>
                         </thead>
-                        <tbody>
 
+                        <tbody>
 
 
                         @if($categories)
@@ -69,6 +72,7 @@
                             @endforeach
                         @endif
                         </tbody>
+
                     </table>
                 </div>
                 <!-- /.card-body -->
