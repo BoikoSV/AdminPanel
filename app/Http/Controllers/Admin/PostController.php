@@ -40,6 +40,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|min:10|max:255',
+            'content' => 'required|min:20',
+        ]);
+
+
         $post = Post::create($request->all());
         //todo написать немного другую логику добавления изображения, написать проверки для всех полей формы, добавить вспрывашки об успешном добавнии поста, не добавлять user_id в массовом присвоении.
         if ($request->hasFile('image')){
@@ -48,7 +54,7 @@ class PostController extends Controller
             $post->save();
         }
 
-        return redirect()->back();
+        return redirect()->route('admin.post.index');
 
     }
 
@@ -111,6 +117,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->deleteImage();
+        $post->delete();
         return redirect()->back();
     }
 
