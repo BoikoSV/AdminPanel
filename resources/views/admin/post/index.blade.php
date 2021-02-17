@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Категории</h1>
+                        <h1>Посты</h1>
                     </div>
                     <div class="col-sm-6">
                     </div>
@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Responsive Hover Table</h3>
+                            <h3 class="card-title">Список постов</h3>
                          {{-- <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="table_search" class="form-control float-right"
@@ -62,12 +62,12 @@
                                     <td>{{ $post->category_id ? $post->category->name : 'Без категории' }}</td>
                                     <td>
                                         @if($post->is_publish)
-                                            <a href="{{ route('admin.post.status', ['post' => $post->id]) }}">
-                                                <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                            <a href="{{ route('admin.post.status', ['post' => $post->id]) }}" class="btn btn-success fa fa-check">
+                                                Опубликован
                                             </a>
                                         @else
-                                            <a href="{{ route('admin.post.status', ['post' => $post->id]) }}">
-                                                <i class="fa fa-times text-danger" aria-hidden="true"></i>
+                                            <a href="{{ route('admin.post.status', ['post' => $post->id]) }}"  class="btn btn-danger fa fa-check">
+                                                Не опубликован
                                             </a>
                                         @endif
                                     </td>
@@ -78,7 +78,7 @@
                                             <a href="{{ route('admin.post.edit', ['post' => $post->id]) }}">
                                                 <i class="fa fa-edit text-success" aria-hidden="true"></i>
                                             </a>
-                                        <form action="" method="post">
+                                        <form action="{{ route('admin.post.destroy', ['post' => $post->id]) }}" method="post">
                                             @csrf
                                             @method('delete')
                                             <button style="border: none; background: none; outline: none;" type="submit">
