@@ -26,8 +26,12 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="inputName">Заголовок поста</label>
-                                    <input type="text" name="title" id="inputName" class="form-control">
+                                    <input type="text" name="title" id="inputName" value="{{ old('title') }}" class="form-control">
+                                    @error('title')
+                                    <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
+
                             </div>
                             @isset($categories)
                             <div class="row">
@@ -54,7 +58,9 @@
                             <div class="form-group">
                                 <label for="inputDescription">Текст поста</label>
                                 <textarea name="content" id="textarea_content" class="form-control" rows="4"></textarea>
-
+                                @error('content')
+                                <p class="text-danger">{{ $message }}</p>
+                                @enderror
                             </div>
                                 <div class="row">
                                     <div class="col-12">
